@@ -1,0 +1,26 @@
+.authorize__button-submit {
+    margin: 216px 0 15px;
+    border: none;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.22;
+    border-radius: 2px;
+    transition: background-color 0.3s;
+    color: #000000;
+    background-color: #FFFFFF;
+    padding: 14px 0;
+
+}
+
+.authorize__button-submit:hover {
+    background-color: rgba(255,255,255,0.85);
+    cursor: pointer;
+}
+
+@media screen and (max-width: 620px) {
+    .authorize__button-submit {
+        font-size: 14px;
+        margin: 173px 0 20px;
+
+    }
+}

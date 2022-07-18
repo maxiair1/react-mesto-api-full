@@ -1,0 +1,4 @@
+.popup__infoTooltip {
+    flex-direction: column;
+    align-items: center;
+}

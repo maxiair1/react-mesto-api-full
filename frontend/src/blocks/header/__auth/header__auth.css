@@ -1,0 +1,12 @@
+.header__auth {
+
+}
+
+.header__auth a {
+    color:#FFFFFF;
+    text-decoration: none;
+}
+
+.header__auth a:hover {
+    opacity: 0.6;
+}

@@ -1,0 +1,17 @@
+.profile {
+  display: grid;
+  grid-template-columns: 120px auto 150px;
+  grid-template-areas: "img title button";
+  gap: 30px;
+}
+
+@media screen and (max-width: 900px) {
+  .profile {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "img"
+      "title"
+      "button";
+    gap: 0;
+  }
+}

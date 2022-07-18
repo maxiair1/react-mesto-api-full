@@ -1,0 +1,16 @@
+.page__adaptive {
+  max-width: 880px;
+}
+
+@media screen and (max-width: 900px) {
+  .page__adaptive {
+    max-width: 581px; /*(282 * 2 + 17)*/
+  }
+}
+
+@media screen and (max-width: 321px) {
+  .page__adaptive {
+  max-width: 282px;
+  }
+}
+

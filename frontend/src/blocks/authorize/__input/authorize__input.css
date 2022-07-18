@@ -1,0 +1,12 @@
+.authorize__input{
+    all: unset;
+    border-bottom: 2px solid rgba(204,204,204,0.9);
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin: 30px 0 0;
+    padding: 0 0 13px 0;
+    color: #cccccc;
+    width: 100%;
+}

@@ -1,0 +1,9 @@
+.popup__image {
+  display: block;
+  max-width: 100%;
+  max-height: inherit;
+  background-position: center;
+  background-repeat: no-repeat;
+  object-fit: contain;
+
+}

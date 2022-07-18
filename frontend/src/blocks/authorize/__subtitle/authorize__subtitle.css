@@ -1,0 +1,13 @@
+.authorize__subtitle {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+}
+.authorize__subtitle a {
+    color:#FFFFFF;
+    text-decoration: none;
+}
+.authorize__subtitle a:hover {
+    opacity: 0.6;
+}

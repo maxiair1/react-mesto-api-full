@@ -1,0 +1,11 @@
+.header__auth-logged {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: #FFFFFF;
+}
+
+.header__auth-logged a {
+    color: #A9A9A9;
+    padding-left: 24px;
+}

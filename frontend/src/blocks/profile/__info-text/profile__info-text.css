@@ -1,0 +1,8 @@
+.profile__info-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 508px; /* 880 - 120 - 150 - 30*2 - 42*/
+}
+
+

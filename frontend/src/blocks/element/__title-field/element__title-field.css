@@ -1,0 +1,9 @@
+.element__title-field {
+  background-color: #FFFFFF;
+  border-radius: 0 0 10px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #000000;
+
+}
