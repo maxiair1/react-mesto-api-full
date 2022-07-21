@@ -28,6 +28,7 @@ function AddPlacePopup(props) {
             name,
             link
         });
+        // console.log('addCardSubmit: ', props)
     }
 
     return (

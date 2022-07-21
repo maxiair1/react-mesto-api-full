@@ -4,7 +4,7 @@ import {CurrentUserContext} from "../context/CurrentUserContext";
 
 function Main(props) {
     const currentUser = React.useContext(CurrentUserContext);
-
+    // console.log('showCards: ', props.cards)
     return (
         <main className="content">
             <section className="profile page__adaptive page__profile">

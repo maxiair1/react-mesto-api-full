@@ -37,18 +37,21 @@ function App() {
 
     useEffect(() => {
         if (isLoggedIn) {
+            const jwt = localStorage.getItem('JWT');
             history.push("/main");
             setIsProfileLoading(true);
-            api.getProfile()
+            api.getProfile(jwt)
                 .then(res => {
-                    setCurrentUser(res);
+                    // console.log('getUser: ', res)
+                    setCurrentUser(res.user);
                 })
                 .catch((err) => console.log('Ошибка загрузки профиля: ', err))
                 .finally(() => setIsProfileLoading(false));
 
-            api.getCards()
+            api.getCards(jwt)
                 .then(res => {
-                    setCards(res.map(card => {
+                    // console.log('getCards: ', res)
+                    setCards(res.allCards.map(card => {
                         return ({
                             _id: card._id,
                             name: card.name,
@@ -71,8 +74,9 @@ function App() {
     function handleLogin(user) {
         login(user.email, user.password)
             .then(res => {
-                    localStorage.setItem('JWT', res.token)
-                    tokenCheck()
+                    localStorage.setItem('JWT', res.token);
+                // console.log('handleLogin: ', res.token);
+                    tokenCheck();
                 }
             )
             .catch(res => {
@@ -106,13 +110,15 @@ function App() {
     function tokenCheck() {
         if (localStorage.getItem('JWT')) {
             let jwt = localStorage.getItem('JWT');
-
+            // console.log('token: ',jwt);
             getContent(jwt)
                 .then((res) => {
+                    // console.log('getContent: ', res)
                     if (res) {
-                        let newUserEmail = res.data.email
+                        let newUserEmail = res.user.email
                         setIsLoggedIn(true);
                         setUserEmail(newUserEmail);
+                        return jwt;
                     }
                 })
                 .catch(err => {
@@ -143,6 +149,10 @@ function App() {
         setIsOpen(true)
     }
 
+    function getToken() {
+        return localStorage.getItem('JWT');
+    }
+
     function closeAllPopups() {
         setIsOpen(false);
         setIsAddPlacePopupOpen(false);
@@ -153,46 +163,56 @@ function App() {
     }
 
     function handleUpdateUser(user) {
-        api.editProfile(user)
+        api.editProfile(user, getToken())
             .then(res => {
-                setCurrentUser(res);
+                // console.log('userUpdate: ', res)
+                setCurrentUser(res.userUpdate);
                 closeAllPopups();
             })
             .catch((err) => console.log('Ошибка загрузки профиля: ', err));
     }
 
     function handleUpdateAvatar(avatar) {
-        api.updateAvatar(avatar)
+        api.updateAvatar(avatar, getToken())
             .then(res => {
-                setCurrentUser(res);
+                // console.log('avatarUpdate: ', res)
+
+                setCurrentUser(res.userUpdateAvatar);
                 closeAllPopups();
             })
             .catch((err) => console.log('Ошибка загрузки аватара: ', err));
     }
 
     function handleAddPlaceSubmit(card) {
-        api.addCard(card)
+        const jwt = localStorage.getItem('JWT');
+        // console.log('addCard: ', card);
+        api.addCard(card, jwt)
             .then(res => {
-                setCards([res, ...cards]);
+                // console.log('addCardRes: ', res);
+                setCards([res.card, ...cards]);
                 closeAllPopups();
             })
-            .catch((err) => console.log('Ошибка загрузки карточки: ', err));
+            .catch((err) => console.log('Ошибка загрузки карточки onClick: ', err));
     }
 
     function handleCardLike(card) {
         // Снова проверяем, есть ли уже лайк на этой карточке
-        const isLiked = card.likes.some(i => i._id === currentUser._id);
-
+        const isLiked = card.likes.some(i => i === currentUser._id);
+        // console.log('isLikedCard: ', card)
+        // console.log('isLiked: ', isLiked)
         // Отправляем запрос в API и получаем обновлённые данные лайка
-        api.changeLikeCardStatus(card._id, !isLiked)
+        api.changeLikeCardStatus(card._id, !isLiked, getToken())
             .then((newCard) => {
-                setCards((state) => state.map((c) => c._id === card._id ? newCard : c))
+                setCards((state) => state.map((c) => {
+                    // console.log('cardLikeMap: ', c)
+                    return c._id === card._id ? newCard : c
+                }))
             })
             .catch((err) => console.log('Ошибка обновления лайка: ', err));
     }
 
     function handleCardDelete(card) { //cards.filter(item => item !== card))
-        api.deleteCard(card._id)
+        api.deleteCard(card._id, getToken())
             .then(() => {
                 setCards(prevState => prevState.filter(item => item !== card))
             })

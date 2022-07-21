@@ -13,70 +13,107 @@ class Api {
     .then( res => res.ok ? res.json() : Promise.reject(`Error: ${res.status}`))
 }
 
-  getProfile() {
+  getProfile(token) {
+    const {headers} = this.settings;
     return  this._makeNewFetch(`${this.settings.baseUrl}/users/me`, {
-      headers: this.settings.headers,
+      //headers: this.settings.headers,
+      headers: {
+        headers,
+        'Authorization': `Bearer ${token}`,
+      },
     })
   }
 
-  editProfile(user) {
+  editProfile(user, token) {
     return this._makeNewFetch(`${this.settings.baseUrl}/users/me`, {
       method: "PATCH",
-      headers: this.settings.headers,
+      // headers: this.settings.headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify(user)
     })
   }
 
-  updateAvatar(avatar){
+  updateAvatar(avatar,token){
     return this._makeNewFetch(`${this.settings.baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: this.settings.headers,
+      // headers: this.settings.headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
       body: JSON.stringify(avatar)
     })
   }
 
-  getCards() {
+  getCards(token) {
+    const {headers} = this.settings;
+
     return this._makeNewFetch(`${this.settings.baseUrl}/cards`, {
-      headers: this.settings.headers
+      headers: {
+        headers,
+        'Authorization': `Bearer ${token}`,
+      },
     })
   }
 
-  addCard(card) {
+  addCard(card, token) {
+    const {headers} = this.settings;
+    console.log('addCardApi: ', JSON.stringify(card))
     return this._makeNewFetch(`${this.settings.baseUrl}/cards`, {
       method: "POST",
-      headers: this.settings.headers,
-      body: JSON.stringify(card)
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(card),
     })
 }
 
-  deleteCard(id) {
+  deleteCard(id, token) {
     return this._makeNewFetch(`${this.settings.baseUrl}/cards/${id}`, {
       method: "DELETE",
-      headers: this.settings.headers,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      // headers: this.settings.headers,
     })
 }
 
-  changeLikeCardStatus(id,isLiked){
+  changeLikeCardStatus(id,isLiked, token){
     if(!isLiked){
       //DELETE https://mesto.nomoreparties.co/v1/cohortId/cards/cardId/likes
       return this._makeNewFetch(`${this.settings.baseUrl}/cards/${id}/likes`, {
         method: "DELETE",
-        headers: this.settings.headers
+        // headers: this.settings.headers
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       })
     } else {
       //PUT https://mesto.nomoreparties.co/v1/cohortId/cards/cardId/likes
       return this._makeNewFetch(`${this.settings.baseUrl}/cards/${id}/likes`, {
         method: "PUT",
-        headers: this.settings.headers
+        // headers: this.settings.headers
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       })
     }
   }
 }
 
 export const api = new Api({
-  baseUrl: "https://mesto.nomoreparties.co/v1/cohort-39",
+  // baseUrl: "https://mesto.nomoreparties.co/v1/cohort-39",
+  // baseUrl: "http://localhost:3001",
+  baseUrl: `${window.location.protocol}${process.env.REACT_APP_API_URL || '//localhost:3001'}`,
   headers: {
-    authorization: '026e3cd0-c777-4ed1-873d-bcc2b8a959a1',
+    // authorization: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM2ZDQ3MmFlMTdjOTRhOTIyNjg2NjEiLCJpYXQiOjE2NTgzMjIzMDQsImV4cCI6MTY1ODkyNzEwNH0.S1DznGY41H06NpzZkp5jfoJBIY9YnSS33fr1_m7Px_c',
     'Content-Type': 'application/json'
   }
 })
