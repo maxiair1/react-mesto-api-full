@@ -14,7 +14,6 @@ module.exports.getCards = (req, res, next) => {
 
 module.exports.createCard = (req, res, next) => {
   const { name, link } = req.body;
-  // console.log('createCard: ', req.body)
   Card.create({ name, link, owner: req.user._id })
     .then((card) => res.send({ card }))
     .catch((err) => {
@@ -92,7 +91,6 @@ module.exports.dislikeCard = (req, res, next) => {
       throw new NotFoundError('Передан несуществующий _id карточки.');
     })
     .then((dislikeCard) => {
-      // res.send({ dislike: dislikeCard });
       res.send({
         likes: dislikeCard.likes,
         name: dislikeCard.name,

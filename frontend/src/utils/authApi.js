@@ -1,5 +1,4 @@
-// export const BASE_URL = "https://auth.nomoreparties.co";
-export const BASE_URL = "http://localhost:3001";
+import { BASE_URL } from './devConst.js';
 
 const checkResponse = (res) => {
     return res.ok ? res.json() : Promise.reject(res);

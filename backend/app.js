@@ -21,9 +21,8 @@ const options = {
     'https://maxiair.nomoredomains.xyz',
     'http://api.maxiair.nomoredomains.xyz',
     'https://api.maxiair.nomoredomains.xyz',
-    'https://maxiair.github.io',
+    'https://maxiair1.github.io',
   ],
-  //credentials: true, // эта опция позволяет устанавливать куки
 };
 
 const app = express();

@@ -3,7 +3,7 @@
   
 ###Проект расположен:
 
-IP: 84.201.176.15
+IP: 84.201.138.217
 
 client: https://maxiair.nomoredomains.xyz
 

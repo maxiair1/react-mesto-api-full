@@ -42,7 +42,6 @@ function App() {
             setIsProfileLoading(true);
             api.getProfile(jwt)
                 .then(res => {
-                    // console.log('getUser: ', res)
                     setCurrentUser(res.user);
                 })
                 .catch((err) => console.log('Ошибка загрузки профиля: ', err))
@@ -50,7 +49,6 @@ function App() {
 
             api.getCards(jwt)
                 .then(res => {
-                    // console.log('getCards: ', res)
                     setCards(res.allCards.map(card => {
                         return ({
                             _id: card._id,
@@ -75,7 +73,6 @@ function App() {
         login(user.email, user.password)
             .then(res => {
                     localStorage.setItem('JWT', res.token);
-                // console.log('handleLogin: ', res.token);
                     tokenCheck();
                 }
             )
@@ -110,10 +107,8 @@ function App() {
     function tokenCheck() {
         if (localStorage.getItem('JWT')) {
             let jwt = localStorage.getItem('JWT');
-            // console.log('token: ',jwt);
             getContent(jwt)
                 .then((res) => {
-                    // console.log('getContent: ', res)
                     if (res) {
                         let newUserEmail = res.user.email
                         setIsLoggedIn(true);
@@ -165,7 +160,6 @@ function App() {
     function handleUpdateUser(user) {
         api.editProfile(user, getToken())
             .then(res => {
-                // console.log('userUpdate: ', res)
                 setCurrentUser(res.userUpdate);
                 closeAllPopups();
             })
@@ -175,8 +169,6 @@ function App() {
     function handleUpdateAvatar(avatar) {
         api.updateAvatar(avatar, getToken())
             .then(res => {
-                // console.log('avatarUpdate: ', res)
-
                 setCurrentUser(res.userUpdateAvatar);
                 closeAllPopups();
             })
@@ -185,10 +177,8 @@ function App() {
 
     function handleAddPlaceSubmit(card) {
         const jwt = localStorage.getItem('JWT');
-        // console.log('addCard: ', card);
         api.addCard(card, jwt)
             .then(res => {
-                // console.log('addCardRes: ', res);
                 setCards([res.card, ...cards]);
                 closeAllPopups();
             })
@@ -198,13 +188,10 @@ function App() {
     function handleCardLike(card) {
         // Снова проверяем, есть ли уже лайк на этой карточке
         const isLiked = card.likes.some(i => i === currentUser._id);
-        // console.log('isLikedCard: ', card)
-        // console.log('isLiked: ', isLiked)
         // Отправляем запрос в API и получаем обновлённые данные лайка
         api.changeLikeCardStatus(card._id, !isLiked, getToken())
             .then((newCard) => {
                 setCards((state) => state.map((c) => {
-                    // console.log('cardLikeMap: ', c)
                     return c._id === card._id ? newCard : c
                 }))
             })
