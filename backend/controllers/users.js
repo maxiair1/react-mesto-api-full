@@ -36,13 +36,13 @@ module.exports.getUserById = (req, res, next) => {
 module.exports.getUserInfo = (req, res, next) => {
   User.findById(req.user._id)
     .orFail(() => {
-      throw new ExistItemError('Передан несуществующий _id пользователя.');
+      throw new NotFoundError('Передан несуществующий _id пользователя.');
     })
     .then((user) => res.send({ user }))
     .catch((err) => {
       if (err.name === 'CastError') {
         next(new RequestNotCorrectError('Переданы некорректные данные'));
-      } else if (err.name === 'ExistItemError') {
+      } else if (err.name === 'NotFoundError') {
         next(err);
       } else {
         next(new ServerError('Ошибка по умолчанию.'));
@@ -89,13 +89,13 @@ module.exports.updateUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true })
     .orFail(() => {
-      throw new ExistItemError('Передан несуществующий _id карточки.');
+      throw new NotFoundError('Передан несуществующий _id карточки.');
     })
     .then((user) => res.send({ userUpdate: user }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new RequestNotCorrectError('Переданы некорректные данные при обновлении профиля.'));
-      } else if (err.name === 'ExistItemError') {
+      } else if (err.name === 'NotFoundError') {
         next(err);
       } else {
         next(new ServerError('Ошибка по умолчанию.'));
@@ -107,13 +107,13 @@ module.exports.updateUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
   User.findByIdAndUpdate(req.user._id, { avatar }, { new: true, runValidators: true })
     .orFail(() => {
-      throw new ExistItemError('Передан несуществующий _id карточки.');
+      throw new NotFoundError('Передан несуществующий _id карточки.');
     })
     .then((user) => res.send({ userUpdateAvatar: user }))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         next(new RequestNotCorrectError('Переданы некорректные данные при обновлении профиля.'));
-      } else if (err.name === 'ExistItemError') {
+      } else if (err.name === 'NotFoundError') {
         next(err);
       } else {
         next(new ServerError('Ошибка по умолчанию.'));

@@ -27,7 +27,7 @@ const options = {
 
 const app = express();
 
-mongoose.connect('mongodb://localhost:27017/mestodb', { useNewUrlParser: true })
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', { useNewUrlParser: true })
   .then(() => console.log('DB connected'))
   .catch((err) => console.log(`cant connect to db: ${err.message}`));
 
@@ -47,10 +47,10 @@ app.post('/signup', createUserValidation, createUser);
 app.use('/users', auth, userRouter);
 app.use('/cards', auth, cardRouter);
 
-app.use(errorLogger);
-app.use('*', (req, res, next) => {
+app.use('*', auth, (req, res, next) => {
   next(new NotFoundError('Страница не найдена.'));
 });
+app.use(errorLogger);
 app.use(errors());
 app.use((err, req, res, next) => {
   if (err.statusCode) {

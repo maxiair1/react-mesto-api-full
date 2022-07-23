@@ -1,6 +1,6 @@
 const { Joi, celebrate } = require('celebrate');
 
-const urlRegexp = /http[s]?:\/\/[www.]?[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]+#?/;
+const urlRegexp = /https?:\/\/[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]+\.[a-zA-Z0-9]{2,6}[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*/;
 
 const createUserValidation = celebrate({
   body: Joi.object().keys({

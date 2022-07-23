@@ -19,8 +19,6 @@ module.exports.createCard = (req, res, next) => {
     .catch((err) => {
       if (err.name === 'ValidationError') {
         next(new RequestNotCorrectError('Переданы некорректные данные при создании карточки1.'));
-      } else if (err.name === 'CastError') {
-        next(new NotFoundError('Пользователь с указанным _id не найден.'));
       } else {
         next(new ServerError('Ошибка по умолчанию.'));
       }
@@ -63,7 +61,7 @@ module.exports.likeCard = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Передан несуществующий _id карточки.');
     })
-    .then((likeCard) => res.send({ //likes: likeCard.likes
+    .then((likeCard) => res.send({
       likes: likeCard.likes,
       name: likeCard.name,
       link: likeCard.link,

@@ -18,7 +18,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "npm run build && scp -r ./build/* maxiair@84.201.138.217:/home/maxiair/mesto-frontend"
+    "deploy": "npm run build && scp -r ./build/* maxiair@51.250.21.221:/home/maxiair/mesto-frontend"
   },
   "eslintConfig": {
     "extends": [
